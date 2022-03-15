@@ -1,0 +1,24 @@
+﻿@using OnlineShop.Models
+@using OnlineShop.States
+@inject CartState CartState
+
+<div class="card w-25">
+    <div class="card-body">
+        <h5 class="card-title">@Product.Name</h5>
+        <p class="card-text">@Product.Description</p>
+        <blockquote class="card-text">$@Product.Price</blockquote>
+        @if (DisplayBuyButton)
+        {
+            <button class="btn btn-primary" type="button" @onclick="_ => CartState.AddProductToCartAsync(Product.Id)">Buy</button>
+        }
+    </div>
+</div>
+
+@code {
+    [EditorRequired]
+    [Parameter]
+    public Product Product { get; set; } = new();
+
+    [Parameter]
+    public bool DisplayBuyButton { get; set; } = false;
+}

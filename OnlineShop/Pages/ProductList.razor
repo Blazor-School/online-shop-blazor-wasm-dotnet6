@@ -1,0 +1,18 @@
+﻿@page "/product-list"
+@using OnlineShop.Models
+@inject HttpClient Http
+
+<h3>ProductList</h3>
+@foreach (var product in Products)
+{
+    <ProductDisplay Product="product" DisplayBuyButton="true"/>
+}
+
+@code {
+    public List<Product> Products { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Products = await Http.GetFromJsonAsync<List<Product>>("sample-data/products.json") ?? new();
+    }
+}

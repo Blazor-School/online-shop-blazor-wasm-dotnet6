@@ -1,0 +1,40 @@
+﻿@page "/checkout"
+@using OnlineShop.Models
+@using OnlineShop.Models.Forms
+@using OnlineShop.States
+@inject IJSRuntime JSRuntime
+@inject CartState CartState
+
+<h3>Checkout</h3>
+<span>You have @CartState.SelectedItems.Count item(s) in your cart.</span>
+@foreach (var selectedItem in CartState.SelectedItems)
+{
+    <ProductDisplay Product="selectedItem" />
+}
+<EditForm class="vstack gap-3" Model="CheckoutForm" OnValidSubmit="SubmitAsync">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div>
+        <label class="form-label" for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="CheckoutForm.Name"></InputText>
+        <ValidationMessage class="form-control" For="()=>CheckoutForm.Name"></ValidationMessage>
+    </div>
+
+    <div>
+        <label class="form-label" for="address">Address:</label>
+        <InputText id="address" class="form-control" @bind-Value="CheckoutForm.Address"></InputText>
+        <ValidationMessage class="form-control" For="()=>CheckoutForm.Address"></ValidationMessage>
+    </div>
+
+    <div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+    public CheckoutForm CheckoutForm { get; set; } = new();
+
+    private async Task SubmitAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", $"Thank you {CheckoutForm.Name}, we will deliver to {CheckoutForm.Address}.");
+    }
+}
