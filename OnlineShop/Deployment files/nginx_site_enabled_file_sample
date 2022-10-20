@@ -3,13 +3,13 @@
 	listen [::]:443 ssl http2;
 	server_name blazorschool.com;
 	ssl_certificate '/home/blazor school/ssl/fullchain.pem';
-    ssl_certificate_key '/home/blazor school/ssl/privkey.pem';
+	ssl_certificate_key '/home/blazor school/ssl/privkey.pem';
 	
 	root "/home/blazor school/wwwroot";
 	
 	location /images/ {
-        root "/home/blazor school/";
-    }
+		root "/home/blazor school/";
+	}
 	
 	location / {
 		try_files $uri $uri/ /index.html;
